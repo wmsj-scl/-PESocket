@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="C2S\C2SBase.cs" />
+    <Compile Include="C2S\C2SRegisterAccount.cs" />
     <Compile Include="ErrorCode.cs" />
     <Compile Include="MsgType.cs" />
     <Compile Include="NetMsg.cs" />

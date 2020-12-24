@@ -40,11 +40,13 @@ public class GameStart : MonoBehaviour {
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            skt.session.SendMsg(new NetMsg {
+            skt.session.SendMsg(new Protocol.C2S.C2SRegisterAccount()
+            {
                 cmd = (int)MsgType.RegisterAccount,
-                seq =111,
-                err =1,
-                text = "Hello Unity"
+                account = "111111",
+                name = "SCL",
+                password = "123123",
+                phone = "12345678901"
             });
         }
     }
