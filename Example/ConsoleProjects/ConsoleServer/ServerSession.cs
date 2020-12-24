@@ -1,4 +1,5 @@
-﻿using PENet;
+﻿using ConsoleServer;
+using PENet;
 using Protocol;
 
 public class ServerSession : PESession<NetMsg> {
@@ -11,6 +12,7 @@ public class ServerSession : PESession<NetMsg> {
 
     protected override void OnReciveMsg(NetMsg msg) {
         PETool.LogMsg("Client Request:" + msg.text);
+        MsgCPU.OnReciveMsg(msg);
         SendMsg(new NetMsg {
             text = msg.text
         });

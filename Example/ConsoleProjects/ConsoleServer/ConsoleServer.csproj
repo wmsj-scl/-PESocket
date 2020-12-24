@@ -35,6 +35,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MsgCPU.cs" />
     <Compile Include="ServerSession.cs" />
     <Compile Include="ServerStart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -46,6 +47,10 @@
     <ProjectReference Include="..\..\..\PESocket\PESocket.csproj">
       <Project>{b4239e0b-82f4-4f9a-a330-0afd46e88d02}</Project>
       <Name>PESocket</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DBHelper\DBHelper.csproj">
+      <Project>{2282B34F-2343-49CC-BEF9-ED623A9051D4}</Project>
+      <Name>DBHelper</Name>
     </ProjectReference>
     <ProjectReference Include="..\Protocol\Protocol.csproj">
       <Project>{680279c3-3145-46f4-b4d7-eca011f11e44}</Project>

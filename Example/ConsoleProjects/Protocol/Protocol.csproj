@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\UnityProjects\UnityClient\Assets\</OutputPath>
+    <OutputPath>..\..\UnityProjects\UnityClient\Assets\Plugin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -31,8 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="C2S\C2SBase.cs" />
+    <Compile Include="ErrorCode.cs" />
+    <Compile Include="MsgType.cs" />
     <Compile Include="NetMsg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="S2C\S2CBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\PESocket\PESocket.csproj">

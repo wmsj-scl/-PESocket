@@ -41,7 +41,7 @@ public class GameStart : MonoBehaviour {
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
             skt.session.SendMsg(new NetMsg {
-                cmd = 1,
+                cmd = (int)MsgType.RegisterAccount,
                 seq =111,
                 err =1,
                 text = "Hello Unity"
