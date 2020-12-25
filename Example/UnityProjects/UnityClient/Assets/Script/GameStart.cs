@@ -9,15 +9,19 @@
 using Protocol;
 using UnityEngine;
 
-public class GameStart : MonoBehaviour {
+public class GameStart : MonoBehaviour
+{
     PENet.PESocket<ClientSession, NetMsg> skt = null;
 
-    private void Start() {
+    private void Start()
+    {
         skt = new PENet.PESocket<ClientSession, NetMsg>();
         skt.StartAsClient(IPCfg.srvIP, IPCfg.srvPort);
 
-        skt.SetLog(true, (string msg, int lv) => {
-            switch (lv) {
+        skt.SetLog(true, (string msg, int lv) =>
+        {
+            switch (lv)
+            {
                 case 0:
                     msg = "Log:" + msg;
                     Debug.Log(msg);
@@ -38,15 +42,67 @@ public class GameStart : MonoBehaviour {
         });
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            skt.session.SendMsg(new Protocol.C2S.C2SGetAccountData()
+            {
+                account = "111111",
+            });
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            skt.session.SendMsg(new Protocol.C2S.C2SGetAccountData()
+            {
+                account = "111112",
+            });
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            skt.session.SendMsg(new Protocol.C2S.C2SGetAccountData()
+            {
+                account = "111113",
+            });
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
             skt.session.SendMsg(new Protocol.C2S.C2SRegisterAccount()
             {
-                cmd = (int)MsgType.RegisterAccount,
-                account = "111111",
-                name = "SCL",
-                password = "123123",
-                phone = "12345678901"
+                comData = {
+                    account = "111111",
+                    name = "SCL",
+                    password = "123123",
+                    phone = "12345678901"
+                },
+
+            });
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            skt.session.SendMsg(new Protocol.C2S.C2SRegisterAccount()
+            {
+                comData = {
+                    account = "111112",
+                    name = "SCL",
+                    password = "123123",
+                    phone = "12345678901"
+                },
+
+            });
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            skt.session.SendMsg(new Protocol.C2S.C2SRegisterAccount()
+            {
+                comData = {
+                    account = "111113",
+                    name = "SCL",
+                    password = "123123",
+                    phone = "12345678901"
+                },
+
             });
         }
     }

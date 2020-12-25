@@ -3,6 +3,14 @@
     [System.Serializable]
     public class S2CBase:NetMsg
     {
-        public ErrorCode errorCode { get { return (ErrorCode)err; } set { err = (int)value; } }
+        public S2CBase(MsgType msgType)
+        {
+            this.msgType = msgType;
+        }
+
+        public S2CBase()
+        {
+            this.msgType = MsgType.None;
+        }
     }
 }

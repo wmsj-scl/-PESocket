@@ -12,8 +12,5 @@ namespace PENet {
 
     [Serializable]
     public abstract class PEMsg {
-        public int seq;
-        public int cmd;
-        public int err;
     }
 }

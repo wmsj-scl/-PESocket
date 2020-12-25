@@ -35,7 +35,7 @@ namespace ConsoleClient {
                 }
                 else {
                     client.session.SendMsg(new NetMsg {
-                        text = ipt
+                        //text = ipt
                     });
                 }
             }

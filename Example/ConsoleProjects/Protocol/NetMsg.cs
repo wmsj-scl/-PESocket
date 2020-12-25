@@ -4,7 +4,9 @@ using PENet;
 namespace Protocol {
     [Serializable]
     public class NetMsg : PEMsg {
-        public string text;
+        public MsgType msgType { get; protected set; }
+
+        public ErrorCode errorCode { get; set; }
     }
 
 
