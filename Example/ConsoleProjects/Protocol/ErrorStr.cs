@@ -31,7 +31,7 @@
                 case ErrorCode.PasswordError:
                     return "密码错误";
                 case ErrorCode.AccountNotExists:
-                    return "账号不存在";
+                    return "账号不存在 请前往注册";
 
             }
             return errorCode.ToString();

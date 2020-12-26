@@ -45,7 +45,7 @@ public class LoginDlg : SingleBase<LoginDlg>
             GameManager.Single.PushTextDlg.ShowText(ErrorStr.GetErrorStr(errCode));
             return;
         }
-        GameManager.Single.GameStart.SendMsg(new C2SLoginAccount()
+        GameStart.Single.SendMsg(new C2SLoginAccount()
         {
             account = inputFieldAccount.text,
             password = inputFieldPassword.text,
@@ -54,6 +54,6 @@ public class LoginDlg : SingleBase<LoginDlg>
 
     private void Register()
     {
-
+        GameManager.Single.registerAccountDlg.gameObject.SetActive(true);
     }
 }

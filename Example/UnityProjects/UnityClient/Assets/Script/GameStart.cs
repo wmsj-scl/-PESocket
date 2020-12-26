@@ -7,9 +7,8 @@
 *************************************************************/
 
 using Protocol;
-using UnityEngine;
 
-public class GameStart : MonoBehaviour
+public class GameStart : SingleBase<GameStart>
 {
     PENet.PESocket<ClientSession, NetMsg> skt = null;
 
