@@ -21,5 +21,10 @@
         /// 获取账号信息
         /// </summary>
         GetAccountData = 3,
+
+        /// <summary>
+        /// 登陆账号
+        /// </summary>
+        LoginAccount = 4,
     }
 }

@@ -1,17 +1,37 @@
 ﻿
+using Protocol;
 using System.Collections.Generic;
 using UnityEngine;
 using MsgType = Protocol.MsgType;
 
-public delegate void Notify(string s);
+public delegate void Notify(NetMsg s);
 
 
-class NotifyManager : SingleBase<NotifyManager>
+public static class NotifyManager
 {
+    private static Queue<NetMsg> netMsgs = new Queue<NetMsg>();
 
-    private Dictionary<MsgType, Notify> notifyDic = new Dictionary<MsgType, Notify>();
+    private static Dictionary<MsgType, Notify> notifyDic = new Dictionary<MsgType, Notify>();
 
-    public void AddNotify(MsgType type, Notify action)
+    public static void OnReciveMsg(NetMsg netMsg)
+    {
+        netMsgs.Enqueue(netMsg);
+    }
+
+    public static void Update()
+    {
+        if (netMsgs.Count != 0)
+        {
+            var data = netMsgs.Dequeue();
+
+            //MsgCpu.Single.OnReciveMsg(data);
+            if (notifyDic.ContainsKey(data.msgType))
+                notifyDic[data.msgType](data);
+
+        }
+    }
+
+    public static void AddNotify(MsgType type, Notify action)
     {
         if (notifyDic.ContainsKey(type))
         {
@@ -24,7 +44,7 @@ class NotifyManager : SingleBase<NotifyManager>
         Debug.Log("注册成功" + type.ToString());
     }
 
-    public void RemoveNotify(MsgType type, Notify action)
+    public static void RemoveNotify(MsgType type, Notify action)
     {
         if (notifyDic.ContainsKey(type))
         {
@@ -33,7 +53,7 @@ class NotifyManager : SingleBase<NotifyManager>
         }
     }
 
-    public Notify GetNotify(MsgType type)
+    public static Notify GetNotify(MsgType type)
     {
         if (notifyDic.ContainsKey(type))
         {

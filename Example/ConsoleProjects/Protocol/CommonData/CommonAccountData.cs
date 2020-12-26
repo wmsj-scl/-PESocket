@@ -7,5 +7,6 @@
         public string name;
         public string password;
         public string phone;
+        public string id;
     }
 }

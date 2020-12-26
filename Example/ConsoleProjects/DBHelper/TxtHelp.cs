@@ -7,6 +7,8 @@ namespace DBHelper
 {
     public static class TxtHelp
     {
+        public const string fileSuffix = ".txt";
+
         private static string GetDirectoryPatch(FileType fileType)
         {
             var path = Directory.GetCurrentDirectory() + "\\Data\\" + fileType.ToString();
@@ -26,7 +28,7 @@ namespace DBHelper
         public static string GetPath(FileType fileType, string name)
         {
             var path = GetDirectoryPatch(fileType);
-            return path + "\\" + name + ".txt";
+            return path + "\\" + name + fileSuffix;
         }
 
         /// <summary>
@@ -78,15 +80,14 @@ namespace DBHelper
             else
             {
                 error = ErrorCode.FailedFileNotExists;
-
             }
 
             return res;
         }
 
-        public static void GetFileList(FileType fileType)
+        public static string[] GetFileList(FileType fileType)
         {
-
+            return Directory.GetFiles(GetDirectoryPatch(FileType.AccountSingle), ".", SearchOption.AllDirectories);
         }
     }
 }

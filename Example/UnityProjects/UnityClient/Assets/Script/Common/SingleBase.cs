@@ -9,7 +9,7 @@ public class SingleBase<T>:MonoBehaviour where T : new()
         {
             if (single == null)
             {
-                single = new T();
+                single = GameObject.Find("Canvas").GetComponent<T>();
 
             }
             return single;

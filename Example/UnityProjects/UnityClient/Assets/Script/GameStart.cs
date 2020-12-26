@@ -17,32 +17,15 @@ public class GameStart : MonoBehaviour
     {
         skt = new PENet.PESocket<ClientSession, NetMsg>();
         skt.StartAsClient(IPCfg.srvIP, IPCfg.srvPort);
-
-        skt.SetLog(true, (string msg, int lv) =>
-        {
-            switch (lv)
-            {
-                case 0:
-                    msg = "Log:" + msg;
-                    Debug.Log(msg);
-                    break;
-                case 1:
-                    msg = "Warn:" + msg;
-                    Debug.LogWarning(msg);
-                    break;
-                case 2:
-                    msg = "Error:" + msg;
-                    Debug.LogError(msg);
-                    break;
-                case 3:
-                    msg = "Info:" + msg;
-                    Debug.Log(msg);
-                    break;
-            }
-        });
     }
 
-    private void Update()
+    public void SendMsg(NetMsg netMsg)
+    {
+        skt.session.SendMsg(netMsg);
+    }
+
+
+   /* private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -74,7 +57,8 @@ public class GameStart : MonoBehaviour
                     account = "111111",
                     name = "SCL",
                     password = "123123",
-                    phone = "12345678901"
+                    phone = "12345678901",
+                    id = "372925199512102338"
                 },
 
             });
@@ -87,7 +71,8 @@ public class GameStart : MonoBehaviour
                     account = "111112",
                     name = "SCL",
                     password = "123123",
-                    phone = "12345678901"
+                    phone = "12345678901",
+                    id = "372925199512102338"
                 },
 
             });
@@ -100,10 +85,11 @@ public class GameStart : MonoBehaviour
                     account = "111113",
                     name = "SCL",
                     password = "123123",
-                    phone = "12345678901"
+                    phone = "12345678901",
+                    id = "372925199512102338"
                 },
 
             });
         }
-    }
+    }*/
 }
