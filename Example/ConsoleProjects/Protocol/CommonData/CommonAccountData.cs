@@ -8,5 +8,6 @@
         public string password;
         public string phone;
         public string id;
+        public AccountPower accountPower;
     }
 }

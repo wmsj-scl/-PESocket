@@ -1,4 +1,5 @@
-﻿using DBHelper;
+﻿using ConsoleServer;
+using DBHelper;
 using PENet;
 using Protocol;
 using Protocol.C2S;
@@ -6,20 +7,25 @@ using Protocol.S2C;
 using System;
 using System.IO;
 
-public class ServerSession : PESession<NetMsg> {
-    protected override void OnConnected() {
+public class ServerSession : PESession<NetMsg>
+{
+    protected override void OnConnected()
+    {
         PETool.LogMsg("Client OnLine.");
-        SendMsg(new S2CBase {
+        SendMsg(new S2CBase
+        {
             errorCode = ErrorCode.Succeed,
         });
     }
 
-    protected override void OnReciveMsg(NetMsg msg) {
+    protected override void OnReciveMsg(NetMsg msg)
+    {
         PETool.LogMsg("Client Request:" + msg.msgType.ToString());
         SendMsg(MsgCPU.OnReciveMsg(msg));
     }
 
-    protected override void OnDisConnected() {
+    protected override void OnDisConnected()
+    {
         PETool.LogMsg("Client OffLine.");
     }
 }
@@ -37,8 +43,34 @@ public static class MsgCPU
                 return GetAccountData(msg);
             case MsgType.LoginAccount:
                 return LoginAccount(msg);
+            case MsgType.GetAppData:
+                return GetAppData(msg);
+            case MsgType.SetAppData:
+                return SetAppData(msg);
         }
         return new S2CBase(msg.msgType) { errorCode = ErrorCode.NoExecution };
+    }
+
+    private static NetMsg SetAppData(NetMsg msg)
+    {
+        var data = msg as C2SSetAppData;
+        TxtHelp.Write(FileType.AppData, FileType.AppData.ToString(), PETool.Serialize(data));
+        ServerStart.SendAll(new S2ACAppDataChanged() { appData = data.appData });
+        return new S2CSetAppData() { errorCode = ErrorCode.Succeed, appData = data.appData };
+    }
+
+    private static NetMsg GetAppData(NetMsg msg)
+    {
+        var errorCode = ErrorCode.Succeed;
+        var data = TxtHelp.Read(FileType.AppData, FileType.AppData.ToString(), out errorCode);
+
+        if (ErrorCode.Succeed == errorCode)
+        {
+            var C2SGetAppData = PETool.DeSerialize<C2SSetAppData>(data);
+            return new S2CGetAppData() { errorCode = errorCode, appData = C2SGetAppData.appData };
+        }
+
+        return new S2CGetAppData() { errorCode = errorCode };
     }
 
     private static NetMsg LoginAccount(NetMsg msg)
@@ -55,7 +87,8 @@ public static class MsgCPU
             }
             else
             {
-                return new S2CLoginAccount() {
+                return new S2CLoginAccount()
+                {
                     errorCode = ErrorCode.Succeed,
                     data = readC2SRegisterAccount.comData,
                 };
@@ -65,7 +98,7 @@ public static class MsgCPU
         {
             return new S2CLoginAccount() { errorCode = ErrorCode.AccountNotExists };
         }
-        return new S2CLoginAccount() {errorCode = errorCode };
+        return new S2CLoginAccount() { errorCode = errorCode };
     }
 
     private static NetMsg GetAccountData(NetMsg msg)
@@ -99,14 +132,18 @@ public static class MsgCPU
             }
             else
             {
+                if (dataC2SRegisterAccount.comData.account.Equals(AppCost.GmAccount))
+                {
+                    dataC2SRegisterAccount.comData.accountPower = AccountPower.Gm;
+                }
                 TxtHelp.Write(FileType.AccountSingle, dataC2SRegisterAccount.comData.account, PETool.Serialize(dataC2SRegisterAccount));
-                return new S2CBase(msg.msgType) { errorCode = ErrorCode.Succeed };
+                return new S2CRegisterAccount() { errorCode = ErrorCode.Succeed, data = dataC2SRegisterAccount.comData };
             }
         }
         else
         {
             return new S2CBase(msg.msgType) { errorCode = errorCode };
         }
-      
+
     }
 }

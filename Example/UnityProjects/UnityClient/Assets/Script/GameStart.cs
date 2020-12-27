@@ -20,75 +20,11 @@ public class GameStart : SingleBase<GameStart>
 
     public void SendMsg(NetMsg netMsg)
     {
+        if (skt.session == null)
+        {
+            GameManager.Single.PushTextDlg.ShowText("已与服务器失去连接！");
+            return;
+        }
         skt.session.SendMsg(netMsg);
     }
-
-
-   /* private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            skt.session.SendMsg(new Protocol.C2S.C2SGetAccountData()
-            {
-                account = "111111",
-            });
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            skt.session.SendMsg(new Protocol.C2S.C2SGetAccountData()
-            {
-                account = "111112",
-            });
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            skt.session.SendMsg(new Protocol.C2S.C2SGetAccountData()
-            {
-                account = "111113",
-            });
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            skt.session.SendMsg(new Protocol.C2S.C2SRegisterAccount()
-            {
-                comData = {
-                    account = "111111",
-                    name = "SCL",
-                    password = "123123",
-                    phone = "12345678901",
-                    id = "372925199512102338"
-                },
-
-            });
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            skt.session.SendMsg(new Protocol.C2S.C2SRegisterAccount()
-            {
-                comData = {
-                    account = "111112",
-                    name = "SCL",
-                    password = "123123",
-                    phone = "12345678901",
-                    id = "372925199512102338"
-                },
-
-            });
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            skt.session.SendMsg(new Protocol.C2S.C2SRegisterAccount()
-            {
-                comData = {
-                    account = "111113",
-                    name = "SCL",
-                    password = "123123",
-                    phone = "12345678901",
-                    id = "372925199512102338"
-                },
-
-            });
-        }
-    }*/
 }

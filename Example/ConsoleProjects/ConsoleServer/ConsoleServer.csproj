@@ -35,6 +35,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppCost.cs" />
     <Compile Include="ServerSession.cs" />
     <Compile Include="ServerStart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

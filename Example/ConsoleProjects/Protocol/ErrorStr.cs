@@ -32,7 +32,16 @@
                     return "密码错误";
                 case ErrorCode.AccountNotExists:
                     return "账号不存在 请前往注册";
-
+                case ErrorCode.InterestsError:
+                    return "利率设置错误！";
+                case ErrorCode.LimitOfMoneyError:
+                    return "贷款额度设置失败";
+                case ErrorCode.NumberStagesError:
+                    return "分期上限设置错误 小于 3 或 大于 36";
+                case ErrorCode.BorrowTitleError:
+                    return "分期协议标题不可为空";
+                case ErrorCode.BorrowContentError:
+                    return "分期协议不可为空";
             }
             return errorCode.ToString();
         }

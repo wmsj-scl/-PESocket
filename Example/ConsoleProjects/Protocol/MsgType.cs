@@ -26,5 +26,20 @@
         /// 登陆账号
         /// </summary>
         LoginAccount = 4,
+
+        /// <summary>
+        /// 获取应用数据
+        /// </summary>
+        GetAppData = 5,
+
+        /// <summary>
+        /// 设置应用数据
+        /// </summary>
+        SetAppData = 6,
+
+        /// <summary>
+        /// 应用数据变化
+        /// </summary>
+        AppDataChanged = 7,
     }
 }

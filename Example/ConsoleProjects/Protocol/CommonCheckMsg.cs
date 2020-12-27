@@ -1,4 +1,5 @@
 ﻿using Protocol.C2S;
+using Protocol.CommonData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,34 @@ namespace Protocol
         public const int passwordMin = 6;
         public const int passwordMax = 16;
 
+        public static ErrorCode CheckAppData(AppData appData)
+        {
+            ErrorCode errorCode = ErrorCode.Succeed;
+            if (appData.interests < 0.01 || appData.interests > 0.5)
+            {
+                return ErrorCode.InterestsError;
+            }
+            if (appData.limitOfMoney < 5000 || appData.limitOfMoney>300000)
+            {
+                return ErrorCode.LimitOfMoneyError;
+            }
+            if (appData.numberStages < 1 || appData.numberStages > 36)
+            {
+                return ErrorCode.NumberStagesError;
+            }
+            if (string.IsNullOrEmpty(appData.borrowTitle))
+            {
+                return ErrorCode.BorrowTitleError;
+            }
+            if (string.IsNullOrEmpty(appData.borrowContent))
+            {
+                return ErrorCode.BorrowContentError;
+            }
+            
+
+            return errorCode;
+        }
+
         public static ErrorCode CheckRegisterAccount(C2SRegisterAccount msg)
         {
             var res = CheckAccount(msg.comData.account);
@@ -28,7 +57,7 @@ namespace Protocol
                 return res;
             }
 
-            res = CheckPhone(msg.comData.password);
+            res = CheckPhone(msg.comData.phone);
             if (res != ErrorCode.Succeed)
             {
                 return res;

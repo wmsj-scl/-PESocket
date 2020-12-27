@@ -71,5 +71,30 @@ namespace Protocol
         /// 账号不存在
         /// </summary>
         AccountNotExists = 12,
+
+        /// <summary>
+        /// 利率设置错误
+        /// </summary>
+        InterestsError = 13,
+
+        /// <summary>
+        /// 贷款上限错误
+        /// </summary>
+        LimitOfMoneyError = 14,
+
+        /// <summary>
+        /// 分期期数上限设置失败
+        /// </summary>
+        NumberStagesError = 15,
+
+        /// <summary>
+        /// 借款协议title为空
+        /// </summary>
+        BorrowTitleError = 16,
+
+        /// <summary>
+        /// 借款协议为空
+        /// </summary>
+        BorrowContentError = 17,
     }
 }

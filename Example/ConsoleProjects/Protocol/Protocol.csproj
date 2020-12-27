@@ -31,20 +31,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AccountPower.cs" />
     <Compile Include="C2S\C2SBase.cs" />
     <Compile Include="C2S\C2SGetAccountData.cs" />
+    <Compile Include="C2S\C2SSetAppData.cs" />
     <Compile Include="C2S\C2SRegisterAccount.cs" />
     <Compile Include="C2S\C2SLoginAccount.cs" />
+    <Compile Include="C2S\C2SGetAppData.cs" />
     <Compile Include="CommonCheckMsg.cs" />
+    <Compile Include="CommonData\AppData.cs" />
     <Compile Include="CommonData\CommonAccountData.cs" />
     <Compile Include="ErrorCode.cs" />
     <Compile Include="ErrorStr.cs" />
     <Compile Include="MsgType.cs" />
     <Compile Include="NetMsg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="S2C\S2ACMsg.cs" />
+    <Compile Include="S2C\All\S2ACAppDataChanged.cs" />
+    <Compile Include="S2C\All\S2ACMsg.cs" />
     <Compile Include="C2S\C2STemp.cs" />
     <Compile Include="S2C\S2CLoginAccount.cs" />
+    <Compile Include="S2C\S2CRegisterAccount.cs" />
+    <Compile Include="S2C\S2CSetAppData.cs" />
+    <Compile Include="S2C\S2CGetAppData.cs" />
     <Compile Include="S2C\Temp.cs" />
     <Compile Include="S2C\S2CBase.cs" />
     <Compile Include="S2C\S2CGetAccountData.cs" />
