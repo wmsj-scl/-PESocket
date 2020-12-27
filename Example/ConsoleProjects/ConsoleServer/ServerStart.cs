@@ -16,8 +16,8 @@ namespace ConsoleServer
             server = new PESocket<ServerSession, NetMsg>();
             server.StartAsServer(IPCfg.srvIP, IPCfg.srvPort);
             Console.WriteLine("\nInput 'quit' to stop server!");
-            var ALL = DBHelper.TxtHelp.GetFileList(DBHelper.FileType.AccountSingle);
-            Console.WriteLine(String.Join("\\n", ALL));
+          
+            //Console.WriteLine(String.Join("\\n", ALL));
             while (true)
             {
                 string ipt = Console.ReadLine();

@@ -34,6 +34,7 @@
     <Compile Include="AccountPower.cs" />
     <Compile Include="C2S\C2SBase.cs" />
     <Compile Include="C2S\C2SGetAccountData.cs" />
+    <Compile Include="C2S\C2SGetAllAccountList.cs" />
     <Compile Include="C2S\C2SSetAppData.cs" />
     <Compile Include="C2S\C2SRegisterAccount.cs" />
     <Compile Include="C2S\C2SLoginAccount.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="S2C\All\S2ACAppDataChanged.cs" />
     <Compile Include="S2C\All\S2ACMsg.cs" />
     <Compile Include="C2S\C2STemp.cs" />
+    <Compile Include="S2C\S2CGetAllAccountList.cs" />
     <Compile Include="S2C\S2CLoginAccount.cs" />
     <Compile Include="S2C\S2CRegisterAccount.cs" />
     <Compile Include="S2C\S2CSetAppData.cs" />

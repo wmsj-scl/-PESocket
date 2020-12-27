@@ -89,5 +89,32 @@ namespace DBHelper
         {
             return Directory.GetFiles(GetDirectoryPatch(FileType.AccountSingle), ".", SearchOption.AllDirectories);
         }
+
+        public static byte[] ReadByPath(string filePath, out ErrorCode error, int size = 1024 * 1024)
+        {
+            error = ErrorCode.Succeed;
+            byte[] res = new Byte[size];
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                    fs.Read(res, 0, res.Length);
+                    fs.Close();
+                    fs.Dispose();
+                }
+                catch (IOException e)
+                {
+                    PETool.LogMsg(string.Format("读取文件失败：file:{0} err:{1}", filePath, e.Message));
+                    error = ErrorCode.FailedReadFile;
+                }
+            }
+            else
+            {
+                error = ErrorCode.FailedFileNotExists;
+            }
+
+            return res;
+        }
     }
 }

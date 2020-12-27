@@ -96,5 +96,10 @@ namespace Protocol
         /// 借款协议为空
         /// </summary>
         BorrowContentError = 17,
+
+        /// <summary>
+        /// 没有权限
+        /// </summary>
+        AccountNoRight = 18,
     }
 }

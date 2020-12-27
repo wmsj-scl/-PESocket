@@ -15,7 +15,7 @@
         /// <summary>
         /// 获取账号列表
         /// </summary>
-        GetAccountList = 2,
+        GetAllAccountList = 2,
 
         /// <summary>
         /// 获取账号信息

@@ -42,6 +42,8 @@
                     return "分期协议标题不可为空";
                 case ErrorCode.BorrowContentError:
                     return "分期协议不可为空";
+                case ErrorCode.AccountNoRight:
+                    return "账户没有权限";
             }
             return errorCode.ToString();
         }

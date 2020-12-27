@@ -3,8 +3,10 @@ using DBHelper;
 using PENet;
 using Protocol;
 using Protocol.C2S;
+using Protocol.CommonData;
 using Protocol.S2C;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 public class ServerSession : PESession<NetMsg>
@@ -47,8 +49,43 @@ public static class MsgCPU
                 return GetAppData(msg);
             case MsgType.SetAppData:
                 return SetAppData(msg);
+            case MsgType.GetAllAccountList:
+                return GetAllAccountList(msg);
         }
         return new S2CBase(msg.msgType) { errorCode = ErrorCode.NoExecution };
+    }
+
+    private static NetMsg GetAllAccountList(NetMsg msg)
+    {
+        var data = msg as C2SGetAllAccountList;
+        ErrorCode errorCode;
+        var redByte = TxtHelp.Read(FileType.AccountSingle, data.account, out errorCode);
+        if (errorCode == ErrorCode.Succeed)
+        {
+            var readC2SRegisterAccount = PETool.DeSerialize<C2SRegisterAccount>(redByte);
+            if (readC2SRegisterAccount.comData.accountPower != AccountPower.Gm)
+            {
+                return new S2CGetAllAccountList() { errorCode = ErrorCode.AccountNoRight };
+            }
+            else
+            {
+                var all = TxtHelp.GetFileList(FileType.AccountSingle);
+                List<CommonAccountData> list = new List<CommonAccountData>();
+                byte[] byteData;
+                for (int i = 0; i < all.Length; i++)
+                {
+                    byteData = TxtHelp.ReadByPath(all[i], out errorCode);
+                    if (errorCode == ErrorCode.Succeed)
+                    {
+                        var accountData = PETool.DeSerialize<C2SRegisterAccount>(byteData);
+                        list.Add(accountData.comData);
+                    }
+                }
+
+                return new S2CGetAllAccountList() { accountDatas = list ,errorCode = ErrorCode.Succeed};
+            }
+        }
+        return new S2CLoginAccount() { errorCode = errorCode };
     }
 
     private static NetMsg SetAppData(NetMsg msg)
