@@ -1,6 +1,8 @@
 ﻿using PENet;
 using Protocol;
+using Protocol.C2S;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace DBHelper
@@ -38,9 +40,9 @@ namespace DBHelper
         /// <param name="name"></param>
         /// <param name="txt"></param>
         public static void Write(FileType fileType, string name, byte[] bytes)
-        {           
+        {
             FileStream fs = new FileStream(GetPath(fileType, name), FileMode.OpenOrCreate);
-         
+
             //开始写入
             fs.Write(bytes, 0, bytes.Length);
             //清空缓冲区、关闭流
@@ -57,7 +59,7 @@ namespace DBHelper
         /// <param name="error"></param>
         /// <param name="size"></param>
         /// <returns></returns>
-        public static byte[] Read(FileType fileType, string name , out ErrorCode error, int size = 1024*1024)
+        public static byte[] Read(FileType fileType, string name, out ErrorCode error, int size = 1024 * 1024)
         {
             error = ErrorCode.Succeed;
             var filePath = GetPath(fileType, name);
@@ -115,6 +117,23 @@ namespace DBHelper
             }
 
             return res;
+        }
+
+        public static ErrorCode CheckAccountPower(string account, params AccountPower[] accountPower)
+        {
+            ErrorCode errorCode;
+            var redByte = TxtHelp.Read(FileType.AccountSingle, account, out errorCode);
+            if (errorCode == ErrorCode.Succeed)
+            {
+                var readC2SRegisterAccount = PETool.DeSerialize<C2SRegisterAccount>(redByte);
+                List<AccountPower> powers = new List<AccountPower>();
+                powers.AddRange(accountPower);
+                if (powers.Contains(readC2SRegisterAccount.comData.accountPower))
+                    errorCode = ErrorCode.Succeed;
+                else
+                    errorCode = ErrorCode.AccountNoRight;
+            }
+            return errorCode;
         }
     }
 }

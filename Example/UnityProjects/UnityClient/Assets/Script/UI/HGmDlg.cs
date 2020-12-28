@@ -19,12 +19,28 @@ public class HGmDlg : MonoBehaviour
     private List<AccountItem> accountItems = new List<AccountItem>();
     private List<CommonAccountData> commonAccountDatas = new List<CommonAccountData>();
 
-    void Start()
+    private void Awake()
     {
         NotifyManager.AddNotify(MsgType.GetAllAccountList, GetAllAccountList);
-        GameManager.Single.GameStart.SendMsg(new C2SGetAllAccountList() { account = GameManager.Single.userData.account });
+    }
+
+    private void OnEnable()
+    {
+        GameManager.Single.GameStart.SendMsg(new C2SGetAllAccountList()
+        {
+            account = GameManager.Single.userData.account
+        });
+    }
+
+    void Start()
+    {
         btnSetting.onClick.AddListener(Setting);
-        btnReturn.onClick.AddListener(() => { gameObject.SetActive(false); });
+        btnReturn.onClick.AddListener(() => {
+            if (settingDlg.gameObject.activeSelf)
+                settingDlg.gameObject.SetActive(false);
+            else
+                gameObject.SetActive(false);
+        });
         settingDlg.gameObject.SetActive(false);
     }
 
@@ -48,7 +64,7 @@ public class HGmDlg : MonoBehaviour
         {
             if (i >= accountItems.Count)
             {
-                accountItems.Add(Instantiate(tempAccount, Content).AddComponent<AccountItem>());
+                accountItems.Add(Instantiate(tempAccount, Content).GetComponent<AccountItem>());
             }
             accountItems[i].SetData(commonAccountDatas[i]);
         }
@@ -62,6 +78,5 @@ public class HGmDlg : MonoBehaviour
 
     private void Setting()
     {
-
     }
 }

@@ -51,39 +51,46 @@ public static class MsgCPU
                 return SetAppData(msg);
             case MsgType.GetAllAccountList:
                 return GetAllAccountList(msg);
+            case MsgType.SetAccountData:
+                return SetAccountData(msg);
         }
         return new S2CBase(msg.msgType) { errorCode = ErrorCode.NoExecution };
+    }
+
+    private static NetMsg SetAccountData(NetMsg msg)
+    {
+        var data = msg as C2SSetAccountData;
+        ErrorCode errorCode = TxtHelp.CheckAccountPower(data.account, new AccountPower[] { AccountPower.Gm, AccountPower.NoneGm });
+        if (errorCode == ErrorCode.Succeed)
+        {
+            WriteOrCoverAccount(new C2SRegisterAccount() { comData = data.data });
+            return new S2CSetAccountData() { data = data.data };
+        }
+
+        return new S2CSetAccountData() { errorCode = errorCode };
     }
 
     private static NetMsg GetAllAccountList(NetMsg msg)
     {
         var data = msg as C2SGetAllAccountList;
         ErrorCode errorCode;
-        var redByte = TxtHelp.Read(FileType.AccountSingle, data.account, out errorCode);
+        errorCode = TxtHelp.CheckAccountPower(data.account, new AccountPower[] { AccountPower.Gm });
         if (errorCode == ErrorCode.Succeed)
         {
-            var readC2SRegisterAccount = PETool.DeSerialize<C2SRegisterAccount>(redByte);
-            if (readC2SRegisterAccount.comData.accountPower != AccountPower.Gm)
+            var all = TxtHelp.GetFileList(FileType.AccountSingle);
+            List<CommonAccountData> list = new List<CommonAccountData>();
+            byte[] byteData;
+            for (int i = 0; i < all.Length; i++)
             {
-                return new S2CGetAllAccountList() { errorCode = ErrorCode.AccountNoRight };
-            }
-            else
-            {
-                var all = TxtHelp.GetFileList(FileType.AccountSingle);
-                List<CommonAccountData> list = new List<CommonAccountData>();
-                byte[] byteData;
-                for (int i = 0; i < all.Length; i++)
+                byteData = TxtHelp.ReadByPath(all[i], out errorCode);
+                if (errorCode == ErrorCode.Succeed)
                 {
-                    byteData = TxtHelp.ReadByPath(all[i], out errorCode);
-                    if (errorCode == ErrorCode.Succeed)
-                    {
-                        var accountData = PETool.DeSerialize<C2SRegisterAccount>(byteData);
-                        list.Add(accountData.comData);
-                    }
+                    var accountData = PETool.DeSerialize<C2SRegisterAccount>(byteData);
+                    list.Add(accountData.comData);
                 }
-
-                return new S2CGetAllAccountList() { accountDatas = list ,errorCode = ErrorCode.Succeed};
             }
+
+            return new S2CGetAllAccountList() { accountDatas = list, errorCode = ErrorCode.Succeed };
         }
         return new S2CLoginAccount() { errorCode = errorCode };
     }
@@ -169,11 +176,7 @@ public static class MsgCPU
             }
             else
             {
-                if (dataC2SRegisterAccount.comData.account.Equals(AppCost.GmAccount))
-                {
-                    dataC2SRegisterAccount.comData.accountPower = AccountPower.Gm;
-                }
-                TxtHelp.Write(FileType.AccountSingle, dataC2SRegisterAccount.comData.account, PETool.Serialize(dataC2SRegisterAccount));
+                WriteOrCoverAccount(dataC2SRegisterAccount);
                 return new S2CRegisterAccount() { errorCode = ErrorCode.Succeed, data = dataC2SRegisterAccount.comData };
             }
         }
@@ -181,6 +184,15 @@ public static class MsgCPU
         {
             return new S2CBase(msg.msgType) { errorCode = errorCode };
         }
-
     }
+
+    private static void WriteOrCoverAccount(C2SRegisterAccount data)
+    {
+        if (data.comData.account.Equals(AppCost.GmAccount))
+        {
+            data.comData.accountPower = AccountPower.Gm;
+        }
+        TxtHelp.Write(FileType.AccountSingle, data.comData.account, PETool.Serialize(data));
+    }
+
 }

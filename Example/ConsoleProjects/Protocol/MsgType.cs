@@ -41,5 +41,6 @@
         /// 应用数据变化
         /// </summary>
         AppDataChanged = 7,
+        SetAccountData = 8,
     }
 }

@@ -22,7 +22,8 @@ public class GameStart : SingleBase<GameStart>
     {
         if (skt.session == null)
         {
-            GameManager.Single.PushTextDlg.ShowText("已与服务器失去连接！");
+            skt.StartAsClient(IPCfg.srvIP, IPCfg.srvPort);
+            GameManager.Single.PushTextDlg.ShowText("已与服务器失去连接！正在重连...");
             return;
         }
         skt.session.SendMsg(netMsg);

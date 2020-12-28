@@ -14,7 +14,7 @@ namespace Protocol
 
         public const int passwordMin = 6;
         public const int passwordMax = 16;
-
+      
         public static ErrorCode CheckAppData(AppData appData)
         {
             ErrorCode errorCode = ErrorCode.Succeed;
@@ -38,32 +38,36 @@ namespace Protocol
             {
                 return ErrorCode.BorrowContentError;
             }
-            
 
             return errorCode;
         }
 
         public static ErrorCode CheckRegisterAccount(C2SRegisterAccount msg)
         {
-            var res = CheckAccount(msg.comData.account);
+            return CheckRegisterAccount(msg.comData);
+        }
+
+        public static ErrorCode CheckRegisterAccount(CommonAccountData data)
+        {
+            var res = CheckAccount(data.account);
             if (res != ErrorCode.Succeed)
             {
                 return res;
             }
 
-            res = CheckPassword(msg.comData.password);
+            res = CheckPassword(data.password);
             if (res != ErrorCode.Succeed)
             {
                 return res;
             }
 
-            res = CheckPhone(msg.comData.phone);
+            res = CheckPhone(data.phone);
             if (res != ErrorCode.Succeed)
             {
                 return res;
             }
 
-            res = CheckID(msg.comData.id);
+            res = CheckID(data.id);
             if (res != ErrorCode.Succeed)
             {
                 return res;

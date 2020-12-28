@@ -14,12 +14,14 @@ public class AccountItem : MonoBehaviour
 
     public void Start()
     {
+        Debug.Log("Start");
         if (Info)
             UpdateUIDate();
     }
 
     public void SetData(CommonAccountData data)
     {
+        Debug.Log("SetData");
         this.data = data;
         gameObject.SetActive(true);
         if (Info)

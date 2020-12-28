@@ -39,6 +39,7 @@
     <Compile Include="C2S\C2SRegisterAccount.cs" />
     <Compile Include="C2S\C2SLoginAccount.cs" />
     <Compile Include="C2S\C2SGetAppData.cs" />
+    <Compile Include="C2S\C2SSetAccountData.cs" />
     <Compile Include="CommonCheckMsg.cs" />
     <Compile Include="CommonData\AppData.cs" />
     <Compile Include="CommonData\CommonAccountData.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="S2C\S2CRegisterAccount.cs" />
     <Compile Include="S2C\S2CSetAppData.cs" />
     <Compile Include="S2C\S2CGetAppData.cs" />
+    <Compile Include="S2C\S2CSetAccountData.cs" />
     <Compile Include="S2C\Temp.cs" />
     <Compile Include="S2C\S2CBase.cs" />
     <Compile Include="S2C\S2CGetAccountData.cs" />

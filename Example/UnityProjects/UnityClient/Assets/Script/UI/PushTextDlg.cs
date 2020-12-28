@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Protocol;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -71,4 +73,8 @@ public class PushTextDlg : MonoBehaviour
    
     }
 
+    public void ShowText(ErrorCode errorCode)
+    {
+        ShowText(ErrorStr.GetErrorStr(errorCode));
+    }
 }

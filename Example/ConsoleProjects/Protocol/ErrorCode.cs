@@ -8,15 +8,15 @@ namespace Protocol
     public enum ErrorCode
     {
         /// <summary>
-        /// 未执行
-        /// </summary>
-        NoExecution = 0,
-
-        /// <summary>
         /// 成功
         /// </summary>
-        Succeed = 1,
-
+        Succeed = 0,
+       
+        /// <summary>
+        /// 未执行
+        /// </summary>
+        NoExecution = 1,
+       
         /// <summary>
         /// 读取文件失败
         /// </summary>
