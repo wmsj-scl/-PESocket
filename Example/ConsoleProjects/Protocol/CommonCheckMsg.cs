@@ -14,7 +14,19 @@ namespace Protocol
 
         public const int passwordMin = 6;
         public const int passwordMax = 16;
-      
+
+        public static ErrorCode CheckBorrowMoney(BorrowInformatio borrow)
+        {
+            var res = CheckAccount(borrow.account);
+            if (res != ErrorCode.Succeed)
+            {
+                return res;
+            }
+
+            return res;
+        }
+
+
         public static ErrorCode CheckAppData(AppData appData)
         {
             ErrorCode errorCode = ErrorCode.Succeed;
@@ -26,7 +38,7 @@ namespace Protocol
             {
                 return ErrorCode.LimitOfMoneyError;
             }
-            if (appData.numberStages < 1 || appData.numberStages > 36)
+            if (CheckStages(appData.numberStages)!=ErrorCode.Succeed)
             {
                 return ErrorCode.NumberStagesError;
             }
@@ -40,6 +52,15 @@ namespace Protocol
             }
 
             return errorCode;
+        }
+
+        public static ErrorCode CheckStages(int numberStages)
+        {
+            if (numberStages < 1 || numberStages > 36)
+            {
+                return ErrorCode.NumberStagesError;
+            }
+            return ErrorCode.Succeed;
         }
 
         public static ErrorCode CheckRegisterAccount(C2SRegisterAccount msg)

@@ -101,5 +101,15 @@ namespace Protocol
         /// 没有权限
         /// </summary>
         AccountNoRight = 18,
+
+        /// <summary>
+        /// 应用数据还未设置 请先联系管理员设置应用数据
+        /// </summary>
+        AppCfgNotSet = 19,
+
+        /// <summary>
+        /// 借款金额超出上限
+        /// </summary>
+        OutLimitOfMoney = 20,
     }
 }

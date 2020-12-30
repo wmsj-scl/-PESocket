@@ -41,6 +41,20 @@
         /// 应用数据变化
         /// </summary>
         AppDataChanged = 7,
+
+        /// <summary>
+        /// 设置账户数据
+        /// </summary>
         SetAccountData = 8,
+
+        /// <summary>
+        /// 借钱
+        /// </summary>
+        BorrowMoney = 9,
+
+        /// <summary>
+        /// 还钱
+        /// </summary>
+        RepayMoney = 10,
     }
 }

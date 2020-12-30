@@ -7,6 +7,7 @@
 *************************************************************/
 
 using Protocol;
+using Protocol.C2S;
 
 public class GameStart : SingleBase<GameStart>
 {
@@ -18,7 +19,7 @@ public class GameStart : SingleBase<GameStart>
         skt.StartAsClient(IPCfg.srvIP, IPCfg.srvPort);
     }
 
-    public void SendMsg(NetMsg netMsg)
+    public void SendMsg(C2SBase netMsg)
     {
         if (skt.session == null)
         {
@@ -26,6 +27,11 @@ public class GameStart : SingleBase<GameStart>
             GameManager.Single.PushTextDlg.ShowText("已与服务器失去连接！正在重连...");
             return;
         }
+        if (!string.IsNullOrEmpty(GameManager.Single.userData.account))
+        {
+            netMsg.account = GameManager.Single.userData.account;
+        }
+
         skt.session.SendMsg(netMsg);
     }
 }

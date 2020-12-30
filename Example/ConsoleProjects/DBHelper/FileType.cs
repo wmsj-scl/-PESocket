@@ -16,5 +16,10 @@
         /// 应用数据 
         /// </summary>
         AppData = 3,
+
+        /// <summary>
+        /// 借还信息
+        /// </summary>
+        MoneyInfo = 4,
     }
 }

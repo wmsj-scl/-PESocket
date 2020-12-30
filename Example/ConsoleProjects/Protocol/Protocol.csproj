@@ -40,8 +40,11 @@
     <Compile Include="C2S\C2SLoginAccount.cs" />
     <Compile Include="C2S\C2SGetAppData.cs" />
     <Compile Include="C2S\C2SSetAccountData.cs" />
+    <Compile Include="C2S\C2SBorrowMoney.cs" />
     <Compile Include="CommonCheckMsg.cs" />
     <Compile Include="CommonData\AppData.cs" />
+    <Compile Include="CommonData\BorrowInformatio.cs" />
+    <Compile Include="CommonData\BorrowInformatioSave.cs" />
     <Compile Include="CommonData\CommonAccountData.cs" />
     <Compile Include="ErrorCode.cs" />
     <Compile Include="ErrorStr.cs" />
@@ -57,6 +60,7 @@
     <Compile Include="S2C\S2CSetAppData.cs" />
     <Compile Include="S2C\S2CGetAppData.cs" />
     <Compile Include="S2C\S2CSetAccountData.cs" />
+    <Compile Include="S2C\S2CBorrowMoney.cs" />
     <Compile Include="S2C\Temp.cs" />
     <Compile Include="S2C\S2CBase.cs" />
     <Compile Include="S2C\S2CGetAccountData.cs" />

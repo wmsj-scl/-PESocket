@@ -44,6 +44,10 @@
                     return "分期协议不可为空";
                 case ErrorCode.AccountNoRight:
                     return "账户没有权限";
+                case ErrorCode.AppCfgNotSet:
+                    return " 应用数据还未设置，请先联系管理员设置应用数据!";
+                case ErrorCode.OutLimitOfMoney:
+                    return "借款金额超出上限!";
             }
             return errorCode.ToString();
         }

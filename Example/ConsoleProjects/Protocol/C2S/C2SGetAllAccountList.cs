@@ -9,7 +9,5 @@ namespace Protocol.C2S
         {
             msgType = MsgType.GetAllAccountList;
         }
-
-        public string account;
     }
 }

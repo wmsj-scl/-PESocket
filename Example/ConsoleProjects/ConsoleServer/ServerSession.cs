@@ -39,6 +39,8 @@ public static class MsgCPU
         PETool.LogMsg("Client Request MsgType:" + msg.msgType.ToString());
         switch (msg.msgType)
         {
+            case MsgType.BorrowMoney:
+                return BorrowMoney(msg);
             case MsgType.RegisterAccount:
                 return RegisterAccount(msg);
             case MsgType.GetAccountData:
@@ -55,6 +57,43 @@ public static class MsgCPU
                 return SetAccountData(msg);
         }
         return new S2CBase(msg.msgType) { errorCode = ErrorCode.NoExecution };
+    }
+
+    private static NetMsg BorrowMoney(NetMsg msg)
+    {
+        var data = msg as C2SBorrowMoney;
+        var errorCode = ErrorCode.Succeed;
+        var C2SGetAppData = GetTxtAppData(out errorCode);
+        if (errorCode == ErrorCode.Succeed)
+        {
+            if (data.borrowInformatio.allMoney > C2SGetAppData.appData.limitOfMoney)
+            {
+                return new S2CBorrowMoney() { errorCode = ErrorCode.OutLimitOfMoney };
+            }
+                data.borrowInformatio.rateInterest = C2SGetAppData.appData.interests;
+            data.borrowInformatio.dateTime = GetCurTime();
+            var bytes = TxtHelp.Read(FileType.MoneyInfo, data.borrowInformatio.account, out errorCode, 1024 * 1024 * 5);
+            BorrowInformatioSave seve;
+            if (errorCode == ErrorCode.Succeed)
+                seve = PETool.DeSerialize<BorrowInformatioSave>(bytes);
+            else
+                seve = new BorrowInformatioSave();
+
+            seve.borrows.Add(data.borrowInformatio);
+            TxtHelp.Write(FileType.MoneyInfo, data.borrowInformatio.account, PETool.Serialize(seve));
+
+            return new S2CBorrowMoney()
+            {
+                errorCode = ErrorCode.Succeed,
+                count = seve.borrows.Count
+            };
+        }
+        else if (errorCode == ErrorCode.FailedFileNotExists)
+        {
+            errorCode = ErrorCode.AppCfgNotSet;
+        }
+
+        return new S2CBorrowMoney() { errorCode = errorCode };
     }
 
     private static NetMsg SetAccountData(NetMsg msg)
@@ -106,11 +145,10 @@ public static class MsgCPU
     private static NetMsg GetAppData(NetMsg msg)
     {
         var errorCode = ErrorCode.Succeed;
-        var data = TxtHelp.Read(FileType.AppData, FileType.AppData.ToString(), out errorCode);
+        var C2SGetAppData = GetTxtAppData(out errorCode);
 
         if (ErrorCode.Succeed == errorCode)
         {
-            var C2SGetAppData = PETool.DeSerialize<C2SSetAppData>(data);
             return new S2CGetAppData() { errorCode = errorCode, appData = C2SGetAppData.appData };
         }
 
@@ -186,6 +224,17 @@ public static class MsgCPU
         }
     }
 
+    private static C2SSetAppData GetTxtAppData(out ErrorCode errorCode)
+    {
+        var data = TxtHelp.Read(FileType.AppData, FileType.AppData.ToString(), out errorCode);
+
+        if (ErrorCode.Succeed == errorCode)
+        {
+            return PETool.DeSerialize<C2SSetAppData>(data); ;
+        }
+        return new C2SSetAppData();
+    }
+
     private static void WriteOrCoverAccount(C2SRegisterAccount data)
     {
         if (data.comData.account.Equals(AppCost.GmAccount))
@@ -193,6 +242,11 @@ public static class MsgCPU
             data.comData.accountPower = AccountPower.Gm;
         }
         TxtHelp.Write(FileType.AccountSingle, data.comData.account, PETool.Serialize(data));
+    }
+
+    public static long GetCurTime()
+    {
+        return (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
     }
 
 }

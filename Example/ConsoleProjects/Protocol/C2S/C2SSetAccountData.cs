@@ -11,6 +11,5 @@ namespace Protocol.C2S
 
         public CommonData.CommonAccountData data;
 
-        public string account;
     }
 }
