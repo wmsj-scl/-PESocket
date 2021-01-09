@@ -1,4 +1,5 @@
 ﻿using Protocol.CommonData;
+using System.Collections.Generic;
 
 namespace Protocol.S2C
 {
@@ -6,6 +7,8 @@ namespace Protocol.S2C
     public class S2CGetAccountData: S2CBase
     {
         public CommonAccountData comData;
+
+        public List<BorrowInformatio> informatio;
 
         public S2CGetAccountData()
         {

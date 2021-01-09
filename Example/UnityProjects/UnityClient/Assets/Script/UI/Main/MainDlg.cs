@@ -60,17 +60,23 @@ public class MainDlg : MonoBehaviour
 
     private void OnToggleGet(bool isOn)
     {
-        GetDlg.Show();
-        MyDlg.gameObject.SetActive(false);
-        HGmDlg.gameObject.SetActive(false);
-        GmDlg.gameObject.SetActive(false);
+        if (isOn)
+        {
+            GetDlg.Show();
+            MyDlg.gameObject.SetActive(false);
+            HGmDlg.gameObject.SetActive(false);
+            GmDlg.gameObject.SetActive(false);
+        }
     }
 
     private void OnToggleMy(bool isOn)
     {
-        MyDlg.Show();
-        GetDlg.gameObject.SetActive(false);
-        HGmDlg.gameObject.SetActive(false);
-        GameManager.Single.GmDlg.gameObject.SetActive(false);
+        if (isOn)
+        {
+            MyDlg.Show();
+            GetDlg.gameObject.SetActive(false);
+            HGmDlg.gameObject.SetActive(false);
+            GameManager.Single.GmDlg.gameObject.SetActive(false);
+        }
     }
 }

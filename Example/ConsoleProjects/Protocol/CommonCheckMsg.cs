@@ -132,6 +132,6 @@ namespace Protocol
                 return account.Length < accountMin ? ErrorCode.AccountShort : ErrorCode.AccountOverLength;
             }
             return ErrorCode.Succeed;
-        }
+        }    
     }
 }

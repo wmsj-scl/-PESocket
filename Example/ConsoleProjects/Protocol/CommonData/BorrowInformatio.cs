@@ -28,12 +28,31 @@ namespace Protocol.CommonData
         /// <summary>
         /// 借款日期
         /// </summary>
-        public long dateTime;
+        public int dateTime;
 
         /// <summary>
         /// 还款记录
         /// </summary>
-        public List<PaymentInfo> paymentInfos = new List<PaymentInfo>(); 
+        public List<PaymentInfo> paymentInfos = new List<PaymentInfo>();
+
+        /// <summary>
+        /// 贷款状态
+        /// </summary>
+        public BorrowState borrowState;
+    }
+
+    [System.Serializable]
+    public enum BorrowState
+    {
+        /// <summary>
+        /// 等待审批
+        /// </summary>
+        WaitApproval = 0,
+
+        /// <summary>
+        /// 已审批
+        /// </summary>
+        Approved = 1,
     }
 
     [System.Serializable]

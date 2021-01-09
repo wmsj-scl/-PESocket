@@ -56,5 +56,6 @@
         /// 还钱
         /// </summary>
         RepayMoney = 10,
+        GetBorrowRecord = 11,
     }
 }
