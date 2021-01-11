@@ -6,6 +6,11 @@ namespace Protocol.CommonData
     public class BorrowInformatio
     {
         /// <summary>
+        /// 借款id
+        /// </summary>
+        public int id;
+
+        /// <summary>
         /// 账号
         /// </summary>
         public string account;
@@ -53,11 +58,26 @@ namespace Protocol.CommonData
         /// 已审批
         /// </summary>
         Approved = 1,
+
+        /// <summary>
+        /// 拒绝
+        /// </summary>
+        Refuse = 2,
+
+        /// <summary>
+        /// 取消
+        /// </summary>
+        Cancel = 3,
     }
 
     [System.Serializable]
     public struct PaymentInfo
     {
+        /// <summary>
+        /// 还款id
+        /// </summary>
+        public int id;
+
         /// <summary>
         /// 还款日期
         /// </summary>

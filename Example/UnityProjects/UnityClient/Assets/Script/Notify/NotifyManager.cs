@@ -41,7 +41,6 @@ public static class NotifyManager
         {
             notifyDic[type] = new Notify(action);
         }
-        Debug.Log("注册成功" + type.ToString());
     }
 
     public static void RemoveNotify(MsgType type, Notify action)
@@ -49,7 +48,6 @@ public static class NotifyManager
         if (notifyDic.ContainsKey(type))
         {
             notifyDic[type] -= action;
-            Debug.Log("注销成功" + type.ToString());
         }
     }
 

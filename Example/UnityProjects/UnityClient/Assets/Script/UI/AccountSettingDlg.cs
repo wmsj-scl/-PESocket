@@ -17,7 +17,6 @@ public class AccountSettingDlg : MonoBehaviour
 
     public CommonAccountData curData { get; private set; }
 
-
     public Transform ItemBorrowRecord;
     public Transform ContentBorrowRecord;
 
@@ -80,12 +79,19 @@ public class AccountSettingDlg : MonoBehaviour
                 itemList.Add(Instantiate(ItemBorrowRecord.gameObject, ContentBorrowRecord).GetComponent<BorrowRecordItem>());
             }
             itemList[i].gameObject.SetActive(true);
-            itemList[i].SetData(list[i]);
+            itemList[i].SetData(list[i], curData);
         }
         for (int i = list.Count; i < itemList.Count; i++)
         {
             itemList[i].gameObject.SetActive(false);
         }
+        Invoke("SetActivity",0.1f);
+    }
+
+    private void SetActivity()
+    {
+        ContentBorrowRecord.gameObject.SetActive(false);
+        ContentBorrowRecord.gameObject.SetActive(true);
     }
 
     private void SetAccountData()

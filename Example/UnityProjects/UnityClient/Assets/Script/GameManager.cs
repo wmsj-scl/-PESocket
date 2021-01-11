@@ -9,6 +9,8 @@ public class GameManager : SingleBase<GameManager>
     public MainDlg MainDlg;
     public GmDlg GmDlg;
     public HGmDlg HGmDlg;
+    public GmAccountSetBorrowDlg gmAccountSetBorrowDlg;
+
 
     public CommonAccountData userData;
     public AppData appData;

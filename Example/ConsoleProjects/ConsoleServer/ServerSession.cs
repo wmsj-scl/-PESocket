@@ -58,8 +58,35 @@ public static class MsgCPU
                 return GetAllAccountList(msg);
             case MsgType.SetAccountData:
                 return SetAccountData(msg);
+            case MsgType.GMDisposeBorrow:
+                return GMDisposeBorrow(msg);
         }
         return new S2CBase(msg.msgType) { errorCode = ErrorCode.NoExecution };
+    }
+
+    private static NetMsg GMDisposeBorrow(NetMsg msg)
+    {
+        var data = msg as C2SGMDisposeBorrow;
+        ErrorCode errorCode = TxtHelp.CheckAccountPower(data.account, new AccountPower[] { AccountPower.Gm, AccountPower.NoneGm });
+        if (errorCode == ErrorCode.Succeed)
+        {
+            var bytes = TxtHelp.Read(FileType.MoneyInfo, data.dispAccount, out errorCode, 1024 * 1024);
+            BorrowInformatioSave seve;
+            if (errorCode == ErrorCode.Succeed)
+            {
+                seve = PETool.DeSerialize<BorrowInformatioSave>(bytes);
+                for (int i = 0; i < seve.borrows.Count; i++)
+                {
+                    if (seve.borrows[i].id == data.data.id)
+                    {
+                        seve.borrows[i] = data.data;
+                        TxtHelp.Write(FileType.MoneyInfo, data.dispAccount, PETool.Serialize(seve));
+                        return new S2CGMDisposeBorrow() { errorCode = ErrorCode.Succeed, dipAccount = data.dispAccount, borrow = data.data };
+                    }
+                }
+            }
+        }
+        return new S2CGMDisposeBorrow() { errorCode = errorCode };
     }
 
     private static NetMsg GetBorrowRecord(NetMsg msg)
@@ -96,7 +123,7 @@ public static class MsgCPU
                 seve = PETool.DeSerialize<BorrowInformatioSave>(bytes);
             else
                 seve = new BorrowInformatioSave();
-
+            data.borrowInformatio.id = seve.borrows.Count + 1;
             seve.borrows.Add(data.borrowInformatio);
             TxtHelp.Write(FileType.MoneyInfo, data.account, PETool.Serialize(seve));
 
@@ -209,7 +236,7 @@ public static class MsgCPU
         if (errorCode == ErrorCode.Succeed)
         {
             var readC2SRegisterAccount = PETool.DeSerialize<C2SRegisterAccount>(redByte);
-            List<BorrowInformatio>  informatio;
+            List<BorrowInformatio> informatio;
             redByte = TxtHelp.Read(FileType.MoneyInfo, dataC2SGetAccountData.account, out errorCode);
             if (errorCode == ErrorCode.Succeed)
             {
@@ -274,7 +301,7 @@ public static class MsgCPU
 
     public static int GetCurTime()
     {
-       
+
         return TimeHelper.GetTimeStamp(DateTime.Now);
     }
 

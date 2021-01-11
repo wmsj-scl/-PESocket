@@ -14,14 +14,12 @@ public class AccountItem : MonoBehaviour
 
     public void Start()
     {
-        Debug.Log("Start");
         if (Info)
             UpdateUIDate();
     }
 
     public void SetData(CommonAccountData data)
     {
-        Debug.Log("SetData");
         this.data = data;
         gameObject.SetActive(true);
         if (Info)
@@ -33,7 +31,10 @@ public class AccountItem : MonoBehaviour
     {
         Info.text = String.Format("姓名：{0},身份证：{1}，手机号：{2}，账号：{3}，密码：{4}，权限：{5}", data.name, data.id, data.phone, data.account, data.password, data.accountPower);
         if (!isAddEvent)
+        {
+            btnSetAccount.onClick.RemoveAllListeners();
             btnSetAccount.onClick.AddListener(OnItemClick);
+        }
     }
 
     private void OnItemClick()
