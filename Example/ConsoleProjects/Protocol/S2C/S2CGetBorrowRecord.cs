@@ -14,5 +14,10 @@ namespace Protocol.S2C
         public string account;
 
         public List<BorrowInformatio> list = new List<BorrowInformatio>();
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

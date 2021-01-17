@@ -14,5 +14,10 @@ namespace Protocol.S2C
         }
 
         public CommonData.CommonAccountData data;
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

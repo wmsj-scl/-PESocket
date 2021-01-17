@@ -67,6 +67,7 @@ public class MainDlg : MonoBehaviour
             HGmDlg.gameObject.SetActive(false);
             GmDlg.gameObject.SetActive(false);
         }
+
     }
 
     private void OnToggleMy(bool isOn)
@@ -78,5 +79,6 @@ public class MainDlg : MonoBehaviour
             HGmDlg.gameObject.SetActive(false);
             GameManager.Single.GmDlg.gameObject.SetActive(false);
         }
+      
     }
 }

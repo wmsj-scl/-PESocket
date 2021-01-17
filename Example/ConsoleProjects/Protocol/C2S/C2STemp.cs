@@ -8,5 +8,10 @@ namespace Protocol.C2S
         {
             msgType = MsgType.GetAccountData;
         }
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

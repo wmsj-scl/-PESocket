@@ -9,5 +9,10 @@ namespace Protocol.C2S
         {
             msgType = MsgType.GetAppData;
         }
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

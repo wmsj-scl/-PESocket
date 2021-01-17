@@ -14,5 +14,10 @@ namespace Protocol.S2C
         {
             msgType = MsgType.GetAccountData;
         }
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

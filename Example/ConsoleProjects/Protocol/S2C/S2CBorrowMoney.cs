@@ -9,5 +9,10 @@
         }
 
         public int count;
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

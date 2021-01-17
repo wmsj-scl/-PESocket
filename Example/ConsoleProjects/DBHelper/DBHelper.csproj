@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\PESocket\PESocket.csproj">
-      <Project>{B4239E0B-82F4-4F9A-A330-0AFD46E88D02}</Project>
+      <Project>{b4239e0b-82f4-4f9a-a330-0afd46e88d02}</Project>
       <Name>PESocket</Name>
     </ProjectReference>
     <ProjectReference Include="..\Protocol\Protocol.csproj">

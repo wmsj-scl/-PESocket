@@ -12,5 +12,9 @@ namespace Protocol.S2C
             msgType = MsgType.SetAppData;
         }
 
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

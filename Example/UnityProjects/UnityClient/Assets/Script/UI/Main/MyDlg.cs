@@ -26,6 +26,8 @@ public class MyDlg : MonoBehaviour
 
     public void Show()
     {
+        if (gameObject.activeSelf)
+            return;
         GameManager.Single.GameStart.SendMsg(new Protocol.C2S.C2SGetBorrowRecord() { getAccount = GameManager.Single.userData.account });
         gameObject.SetActive(true);
     }

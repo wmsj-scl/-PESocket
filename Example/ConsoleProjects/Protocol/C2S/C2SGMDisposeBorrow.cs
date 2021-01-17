@@ -12,5 +12,10 @@ namespace Protocol.C2S
 
         public string dispAccount;
         public BorrowInformatio data;
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

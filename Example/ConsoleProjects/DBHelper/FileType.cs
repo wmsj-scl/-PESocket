@@ -21,5 +21,10 @@
         /// 借还信息
         /// </summary>
         MoneyInfo = 4,
+
+        /// <summary>
+        /// Log信息
+        /// </summary>
+        Log = 5,
     }
 }

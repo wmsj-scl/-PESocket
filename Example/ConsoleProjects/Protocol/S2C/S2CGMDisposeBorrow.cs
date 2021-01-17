@@ -13,5 +13,10 @@ namespace Protocol.S2C
         public string dipAccount;
 
         public BorrowInformatio borrow;
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

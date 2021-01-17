@@ -7,6 +7,11 @@ namespace Protocol {
         public MsgType msgType { get; protected set; }
 
         public ErrorCode errorCode { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("msgType:{0},errorCode:{1}", msgType.ToString(), errorCode.ToString());
+        }
     }
 
 

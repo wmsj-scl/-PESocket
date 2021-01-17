@@ -27,5 +27,10 @@
         /// 协议体
         /// </summary>
         public string borrowContent;
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

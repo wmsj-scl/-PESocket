@@ -12,5 +12,10 @@ namespace Protocol.C2S
         {
             msgType = MsgType.RegisterAccount;
         }
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

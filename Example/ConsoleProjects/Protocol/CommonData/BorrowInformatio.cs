@@ -36,14 +36,19 @@ namespace Protocol.CommonData
         public int dateTime;
 
         /// <summary>
+        /// 贷款状态
+        /// </summary>
+        public BorrowState borrowState;
+
+        /// <summary>
         /// 还款记录
         /// </summary>
         public List<PaymentInfo> paymentInfos = new List<PaymentInfo>();
 
-        /// <summary>
-        /// 贷款状态
-        /// </summary>
-        public BorrowState borrowState;
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 
     [System.Serializable]
@@ -97,5 +102,10 @@ namespace Protocol.CommonData
         /// 本金
         /// </summary>
         public float principal;
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

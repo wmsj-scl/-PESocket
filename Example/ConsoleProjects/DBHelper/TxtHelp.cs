@@ -4,11 +4,59 @@ using Protocol.C2S;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace DBHelper
 {
     public static class TxtHelp
     {
+
+        static TxtHelp()
+        {
+            PETool.logCB += (msg, lv) =>
+            {
+                WriteLog(FileType.Log, GetLogFileName(), msg);// GetLogFileName(
+
+                if (lv == (int)LogLevel.None)
+                {
+                    Console.WriteLine(msg);
+                }
+                else if (lv == (int)LogLevel.Warn)
+                {
+                    //Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("//--------------------Warn--------------------//");
+                    Console.WriteLine(msg);
+                    //Console.ForegroundColor = ConsoleColor.Gray;
+                }
+                else if (lv == (int)LogLevel.Error)
+                {
+                    //Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("//--------------------Error--------------------//");
+                    Console.WriteLine(msg);
+                    //Console.ForegroundColor = ConsoleColor.Gray;
+                }
+                else if (lv == (int)LogLevel.Info)
+                {
+                    //Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("//--------------------Info--------------------//");
+                    Console.WriteLine(msg);
+                    //Console.ForegroundColor = ConsoleColor.Gray;
+                }
+                else
+                {
+                    //Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("//--------------------Error--------------------//");
+                    Console.WriteLine(msg + " >> Unknow Log Type\n");
+                    //Console.ForegroundColor = ConsoleColor.Gray;
+                }
+            };
+        }
+
+        private static string GetLogFileName()
+        {
+            return DateTime.Now.AddDays(1).ToString("yyyy年MM月dd日");
+        }
+
         public const string fileSuffix = ".txt";
 
         private static string GetDirectoryPatch(FileType fileType)
@@ -49,6 +97,16 @@ namespace DBHelper
             fs.Flush();
             fs.Close();
             fs.Dispose();
+        }
+
+        public static void WriteLog(FileType fileType, string name,string log)
+        {
+            using (FileStream fs = new FileStream(GetPath(fileType, name), FileMode.Append,FileAccess.Write))
+{
+                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+                sw.WriteLine(log);
+                sw.Close();
+            }
         }
 
         /// <summary>

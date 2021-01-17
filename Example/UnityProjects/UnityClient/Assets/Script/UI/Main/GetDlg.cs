@@ -35,6 +35,8 @@ public class GetDlg : MonoBehaviour
 
     internal void Show()
     {
+        if (gameObject.activeSelf)
+            return;
         gameObject.SetActive(true);
         if (inited)
             UpdateUIData();

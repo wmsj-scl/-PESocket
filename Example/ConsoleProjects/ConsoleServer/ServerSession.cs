@@ -23,8 +23,9 @@ public class ServerSession : PESession<NetMsg>
 
     protected override void OnReciveMsg(NetMsg msg)
     {
-        PETool.LogMsg("Client Request:" + msg.msgType.ToString());
-        SendMsg(MsgCPU.OnReciveMsg(msg));
+        var data = MsgCPU.OnReciveMsg(msg);
+        PETool.LogMsg(string.Format("Send Client:{0}", data.ToString()));
+        SendMsg(data);
     }
 
     protected override void OnDisConnected()
@@ -35,9 +36,11 @@ public class ServerSession : PESession<NetMsg>
 
 public static class MsgCPU
 {
+
+
     public static NetMsg OnReciveMsg(NetMsg msg)
     {
-        PETool.LogMsg("Client Request MsgType:" + msg.msgType.ToString());
+        PETool.LogMsg("Client Request:" + msg.ToString());
         switch (msg.msgType)
         {
             case MsgType.GetBorrowRecord:
