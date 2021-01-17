@@ -10,7 +10,7 @@ public class GameManager : SingleBase<GameManager>
     public GmDlg GmDlg;
     public HGmDlg HGmDlg;
     public GmAccountSetBorrowDlg gmAccountSetBorrowDlg;
-
+    public GMSetRepaymentDlg gMSetRepaymentDlg;
 
     public CommonAccountData userData;
     public AppData appData;
@@ -20,6 +20,8 @@ public class GameManager : SingleBase<GameManager>
         DontDestroyOnLoad(this);
         PushTextDlg.gameObject.SetActive(true);
         PushTextDlg.gameObject.SetActive(false);
+        gMSetRepaymentDlg.gameObject.SetActive(false);
+        gmAccountSetBorrowDlg.gameObject.SetActive(false);
         //registerAccountDlg.gameObject.SetActive(false);
         //GameStart.gameObject.SetActive(false);
         //MainDlg.gameObject.SetActive(false);

@@ -58,5 +58,6 @@
         RepayMoney = 10,
         GetBorrowRecord = 11,
         GMDisposeBorrow = 12,
+        GMRepay = 13,
     }
 }

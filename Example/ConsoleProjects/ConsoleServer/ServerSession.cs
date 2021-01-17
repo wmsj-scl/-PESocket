@@ -60,8 +60,38 @@ public static class MsgCPU
                 return SetAccountData(msg);
             case MsgType.GMDisposeBorrow:
                 return GMDisposeBorrow(msg);
+            case MsgType.GMRepay:
+                return GMRepay(msg);
         }
         return new S2CBase(msg.msgType) { errorCode = ErrorCode.NoExecution };
+    }
+
+    private static NetMsg GMRepay(NetMsg msg)
+    {
+        var data = msg as C2SGMRepay;
+        ErrorCode code = TxtHelp.CheckAccountPower(data.account, new AccountPower[] { AccountPower.Gm, AccountPower.NoneGm });
+        if (code == ErrorCode.Succeed)
+        {
+            var bytes = TxtHelp.Read(FileType.MoneyInfo, data.otherAccount, out code, 1024 * 1024);
+            BorrowInformatioSave seve;
+            if (code == ErrorCode.Succeed)
+            {
+                seve = PETool.DeSerialize<BorrowInformatioSave>(bytes);
+                for (int i = 0; i < seve.borrows.Count; i++)
+                {
+                    if (seve.borrows[i].id == data.borrowInfoId)
+                    {
+                        data.PaymentInfo.id = seve.borrows[i].paymentInfos.Count + 1;
+                        data.PaymentInfo.dateTime = GetCurTime();
+                        seve.borrows[i].paymentInfos.Add(data.PaymentInfo);
+                        TxtHelp.Write(FileType.MoneyInfo, data.otherAccount, PETool.Serialize(seve));
+                        return new S2CGMRepay() { errorCode = ErrorCode.Succeed };
+                    }
+                }
+            }
+        }
+
+        return new S2CGMRepay() { errorCode = code };
     }
 
     private static NetMsg GMDisposeBorrow(NetMsg msg)

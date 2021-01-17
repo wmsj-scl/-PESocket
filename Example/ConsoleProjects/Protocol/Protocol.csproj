@@ -43,6 +43,7 @@
     <Compile Include="C2S\C2SSetAccountData.cs" />
     <Compile Include="C2S\C2SBorrowMoney.cs" />
     <Compile Include="C2S\C2SGMDisposeBorrow.cs" />
+    <Compile Include="C2S\C2SGMRepay.cs" />
     <Compile Include="CommonCheckMsg.cs" />
     <Compile Include="CommonData\AppData.cs" />
     <Compile Include="CommonData\BorrowInformatio.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="S2C\S2CBorrowMoney.cs" />
     <Compile Include="S2C\S2CGetBorrowRecord.cs" />
     <Compile Include="S2C\S2CGMDisposeBorrow.cs" />
+    <Compile Include="S2C\S2CGMRepay.cs" />
     <Compile Include="S2C\Temp.cs" />
     <Compile Include="S2C\S2CBase.cs" />
     <Compile Include="S2C\S2CGetAccountData.cs" />
