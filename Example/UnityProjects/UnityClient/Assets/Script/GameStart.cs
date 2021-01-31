@@ -13,10 +13,13 @@ public class GameStart : SingleBase<GameStart>
 {
     PENet.PESocket<ClientSession, NetMsg> skt = null;
 
+    private string ipLocal = "127.0.0.1";
+
     private void Start()
     {
+        var ip = GameManager.Single.servetType == ServetType.Local ? ipLocal : IPCfg.srvIP;
         skt = new PENet.PESocket<ClientSession, NetMsg>();
-        skt.StartAsClient(IPCfg.srvIP, IPCfg.srvPort);
+        skt.StartAsClient(ip, IPCfg.srvPort);
     }
 
     public void SendMsg(C2SBase netMsg)

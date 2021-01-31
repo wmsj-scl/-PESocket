@@ -77,7 +77,9 @@ namespace DBHelper
 
         public static string GetPath(FileType fileType, string name)
         {
+            Console.WriteLine(name);
             var path = GetDirectoryPatch(fileType);
+            Console.WriteLine(path);
             return path + "\\" + name + fileSuffix;
         }
 
@@ -122,6 +124,9 @@ namespace DBHelper
             error = ErrorCode.Succeed;
             var filePath = GetPath(fileType, name);
             byte[] res = new Byte[size];
+
+
+
             if (File.Exists(filePath))
             {
                 try
@@ -139,6 +144,7 @@ namespace DBHelper
             }
             else
             {
+                PETool.LogMsg(string.Format("读取文件失败：file:{0} err:{1}", filePath, "文件不存在!"));
                 error = ErrorCode.FailedFileNotExists;
             }
 

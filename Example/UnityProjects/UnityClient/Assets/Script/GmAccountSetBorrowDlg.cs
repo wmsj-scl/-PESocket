@@ -23,6 +23,7 @@ public class GmAccountSetBorrowDlg : MonoBehaviour
 
     public Button BtnRepay;
     public Button BtnClosey;
+    public Button BtnSettle;
 
     private bool isStart = false;
 
@@ -39,6 +40,7 @@ public class GmAccountSetBorrowDlg : MonoBehaviour
 
         try
         {
+            BtnSettle.onClick.AddListener(onBtnSettle);
             AllMoney.onValueChanged.AddListener(onValueChanged);
             BtnCancel.onClick.AddListener(OnCancel);
             BtnPass.onClick.AddListener(OnPass);
@@ -53,6 +55,19 @@ public class GmAccountSetBorrowDlg : MonoBehaviour
 
         }
         catch { }
+    }
+
+    private void onBtnSettle()
+    {
+        if (BorrowRecordItem.GetPrincipal(informatio) >= informatio.allMoney)
+        {
+            informatio.borrowState = BorrowState.Settle;
+            GameManager.Single.GameStart.SendMsg(new Protocol.C2S.C2SGMDisposeBorrow() { dispAccount = account.account, data = informatio });
+        }
+        else
+        {
+            GameManager.Single.PushTextDlg.ShowText("欠款还没还清，请先还清在点此按钮！");
+        }
     }
 
     private void GMDisposeBorrow(NetMsg s)

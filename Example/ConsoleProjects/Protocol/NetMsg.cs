@@ -16,7 +16,7 @@ namespace Protocol {
 
 
     public class IPCfg {
-        public const string srvIP = "127.0.0.1";
+        public const string srvIP = "0.0.0.0";
         public const int srvPort = 17666;
     }
 }

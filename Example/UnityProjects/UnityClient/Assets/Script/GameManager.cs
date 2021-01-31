@@ -1,7 +1,15 @@
 ﻿using Protocol.CommonData;
 
+public enum ServetType
+{
+    Local = 1,
+    Tencent = 2,
+}
+
 public class GameManager : SingleBase<GameManager>
 {
+    public ServetType servetType = ServetType.Tencent;
+
     public PushTextDlg PushTextDlg;
     public LoginDlg LoginDlg;
     public RegisterAccountDlg registerAccountDlg;

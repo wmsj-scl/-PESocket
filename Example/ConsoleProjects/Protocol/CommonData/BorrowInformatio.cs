@@ -73,6 +73,11 @@ namespace Protocol.CommonData
         /// 取消
         /// </summary>
         Cancel = 3,
+
+        /// <summary>
+        /// j结清
+        /// </summary>
+        Settle = 4,
     }
 
     [System.Serializable]

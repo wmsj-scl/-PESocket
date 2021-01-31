@@ -111,6 +111,16 @@ public class BorrowRecordItem : MonoBehaviour
         return text;
     }
 
+    public static float GetPrincipal(BorrowInformatio data)
+    {
+        float principal = 0;
+        for (int i = 0; i < data.paymentInfos.Count; i++)
+        {
+            principal += data.paymentInfos[i].principal;
+        }
+        return principal;
+    }
+
     private static string GetBorrowStateStr(BorrowState borrowState)
     {
         switch (borrowState)
@@ -123,6 +133,8 @@ public class BorrowRecordItem : MonoBehaviour
                 return "\n<color=red>——已拒绝</color>";
             case BorrowState.Cancel:
                 return "\n<color=yellow>——已取消</color>";
+            case BorrowState.Settle:
+                return "\n<color=yellow>——还款完毕！</color>";
             default:
                 return "\n等待管理员审核";
         }
