@@ -88,7 +88,7 @@ public static class MsgCPU
                         data.PaymentInfo.dateTime = GetCurTime();
                         seve.borrows[i].paymentInfos.Add(data.PaymentInfo);
                         TxtHelp.Write(FileType.MoneyInfo, data.otherAccount, PETool.Serialize(seve));
-                        return new S2CGMRepay() { errorCode = ErrorCode.Succeed };
+                        return new S2CGMRepay() { errorCode = ErrorCode.Succeed , borrow = seve.borrows[i] };
                     }
                 }
             }

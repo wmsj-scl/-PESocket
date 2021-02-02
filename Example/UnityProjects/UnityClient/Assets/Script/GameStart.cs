@@ -17,7 +17,7 @@ public class GameStart : SingleBase<GameStart>
 
     private void Start()
     {
-        var ip = GameManager.Single.servetType == ServetType.Local ? ipLocal : IPCfg.srvIP;
+        var ip = GameManager.Single.servetType == ServetType.Local ? ipLocal : IPCfg.srvOpenIP;
         skt = new PENet.PESocket<ClientSession, NetMsg>();
         skt.StartAsClient(ip, IPCfg.srvPort);
     }

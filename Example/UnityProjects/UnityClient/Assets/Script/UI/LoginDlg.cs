@@ -19,6 +19,14 @@ public class LoginDlg : SingleBase<LoginDlg>
         NotifyManager.AddNotify(MsgType.GetAppData, GetAppData);
         btnLogin.onClick.AddListener(Login);
         btnRegister.onClick.AddListener(Register);
+        var account = PlayerPrefs.GetString("account", "");
+        var password = PlayerPrefs.GetString("password", "");
+        if (!string.IsNullOrEmpty(account) || !string.IsNullOrEmpty(password))
+        {
+            inputFieldAccount.text = account;
+            inputFieldPassword.text = password;
+        }
+
     }
 
     private void AppDataChanged(NetMsg msg)
@@ -80,6 +88,8 @@ public class LoginDlg : SingleBase<LoginDlg>
             account = inputFieldAccount.text,
             password = inputFieldPassword.text,
         });
+        PlayerPrefs.SetString("account", inputFieldAccount.text);
+        PlayerPrefs.SetString("password", inputFieldPassword.text);
     }
 
     private void Register()

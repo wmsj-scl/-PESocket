@@ -36,7 +36,7 @@ public class GmAccountSetBorrowDlg : MonoBehaviour
     private void Start()
     {
         NotifyManager.AddNotify(MsgType.GMDisposeBorrow, GMDisposeBorrow);
-
+        NotifyManager.AddNotify(MsgType.GMRepay, GMRepay);
 
         try
         {
@@ -55,6 +55,20 @@ public class GmAccountSetBorrowDlg : MonoBehaviour
 
         }
         catch { }
+    }
+
+    private void GMRepay(NetMsg s)
+    {
+        var data = s as S2CGMRepay;
+        if (data.errorCode == ErrorCode.Succeed)
+        {
+            informatio = data.borrow;
+            Show(account, informatio);
+        }
+        else
+        {
+            GameManager.Single.PushTextDlg.ShowText(data.errorCode);
+        }
     }
 
     private void onBtnSettle()
@@ -76,6 +90,7 @@ public class GmAccountSetBorrowDlg : MonoBehaviour
         if (data.errorCode == ErrorCode.Succeed)
         {
             informatio = data.borrow;
+            Show(account, informatio);
         }
         else
         {
@@ -144,12 +159,11 @@ public class GmAccountSetBorrowDlg : MonoBehaviour
         this.informatio = informatio;
         if (!isStart)
         {
-            Start();
+            gameObject.SetActive(true);
             return;
         }
-
         gameObject.SetActive(true);
-
+        AllMoney.text = "0";
         TextInfo.text = BorrowRecordItem.GetBorrowInformatioStr(informatio);
 
         Content.gameObject.SetActive(false);

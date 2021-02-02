@@ -8,7 +8,8 @@ public class PushTextDlg : MonoBehaviour
 {
     private const string pushAnimatorName = "PushText";
 
-    private Queue<string> queue = new Queue<string>();
+    private List<string> excludeStr = new List<string> { "文件不存在" };
+        private Queue<string> queue = new Queue<string>();
 
     public Animator animator;
     public Text text;
@@ -40,6 +41,8 @@ public class PushTextDlg : MonoBehaviour
 
     public void ShowText(string str)
     {
+        if (excludeStr.Contains(str))
+            return;
         queue.Enqueue(str);
         Show();
     }
