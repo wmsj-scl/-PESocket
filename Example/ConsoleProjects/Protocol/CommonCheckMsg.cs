@@ -101,7 +101,7 @@ namespace Protocol
         {
             if (id.Length != 18)
             {
-                return ErrorCode.PhoneLengthError;
+                return ErrorCode.IDLengthError;
             }
 
             return ErrorCode.Succeed;
